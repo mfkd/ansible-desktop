@@ -5,6 +5,3 @@
 - name: Update package lists
   pacman: update_cache=yes
   changed_when: false
-
-- name: Copy makepkg configuration
-  copy: src=files/makepkg.conf dest=/etc/makepkg.conf
