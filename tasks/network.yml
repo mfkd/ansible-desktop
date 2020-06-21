@@ -1,0 +1,23 @@
+---
+- name: Install wireless tools
+  when: wifi|bool
+  pacman:
+    name:
+      - wpa_supplicant
+      - dialog  # needed for wifi-menu
+
+- template: src=files/hosts dest=/etc/hosts
+
+- copy: src=files/bin/get-wired-interface dest=/usr/local/bin/get-wired-interface mode=755
+
+- copy: src=files/bin/internet-isnt-crappy dest=/usr/local/bin/internet-isnt-crappy mode=755
+
+- command: get-wired-interface
+  register: wired_iface
+  changed_when: false
+
+- template: src=files/generic-wired dest=/etc/netctl/generic-wired
+
+# For now, go back to manual management to avoid any confusion. ifplugd doesn't
+# help much anyway.
+- service: name=netctl-ifplugd@{{ wired_iface.stdout | trim }} state=stopped enabled=no

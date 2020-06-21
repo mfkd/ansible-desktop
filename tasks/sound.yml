@@ -1,0 +1,21 @@
+---
+- name: Add snd_hda_intel power save settings
+  copy: src=files/sound-power-save dest=/etc/modprobe.d/99-sound-power-save.conf mode=644
+
+- name: Install PulseAudio
+  pacman:
+    name:
+      - pulseaudio
+      - pavucontrol
+  when: not minimal
+
+- name: Install PulseAudio utils
+  aur: name=pulseaudio-ctl skip_installed=yes
+  become: yes
+  become_user: makepkg
+  when: not minimal
+
+- file: path=/etc/pulse state=directory
+
+- name: Add HDMI sink to PA
+  copy: src=files/default.pa dest=/etc/pulse/default.pa mode=644

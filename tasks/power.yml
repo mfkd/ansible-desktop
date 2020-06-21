@@ -1,0 +1,40 @@
+---
+
+- name: Install TLP
+  pacman:
+    name: tlp
+
+- name: Copy TLP config
+  copy: src=files/tlp.conf dest=/etc/tlp.conf
+
+- name: Enable TLP services
+  systemd: name={{ item }} enabled=yes masked=no
+  with_items:
+    - tlp
+
+- name: Mask units conflicting with TLP
+  systemd: name={{ item }} state=stopped masked=yes
+  with_items:
+    - systemd-rfkill.service
+    - systemd-rfkill.socket
+
+- name: Copy power key disable
+  copy: src=files/logind.conf dest=/etc/systemd/logind.conf
+
+- name: Copy power targets udev rule
+  copy: src=files/udev/powertargets.rules dest=/etc/udev/rules.d/99-powertargets.rules
+
+- name: Copy power targets
+  copy: src=files/{{ item }}.target dest=/etc/systemd/system
+  with_items:
+    - ac
+    - battery
+
+- pacman: name=throttled
+  when: model in ["T470s", "T460s"]
+
+- systemd: name=lenovo_fix state=started enabled=yes masked=no
+  when: model in ["T470s", "T460s"]
+
+- name: Add wifi power save settings
+  copy: src=files/wifi-power-save dest=/etc/modprobe.d/99-wifi-power-save.conf mode=644

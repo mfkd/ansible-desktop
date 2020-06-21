@@ -1,0 +1,6 @@
+---
+model: VirtualBox
+wifi: false
+laptop: false
+
+part_type: gpt

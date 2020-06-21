@@ -1,0 +1,6 @@
+---
+model: T470s
+wifi: true
+laptop: true
+
+part_type: gpt

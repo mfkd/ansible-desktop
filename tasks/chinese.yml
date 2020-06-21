@@ -1,0 +1,7 @@
+---
+- name: Install tools for Pinyin entry
+  pacman:
+    name:
+      - fcitx
+      - fcitx-sunpinyin
+      - fcitx-gtk3

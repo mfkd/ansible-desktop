@@ -1,0 +1,35 @@
+---
+key_user: cdown
+
+users:
+  - cdown
+  - lin
+
+users_inc_super:
+  - cdown
+  - lin
+  - root
+
+install_env_users:
+  - cdown
+  - lin
+
+minimal: false
+
+kernel: linux
+systemd: systemd
+hdd_scheduler: mq-deadline
+ssd_scheduler: mq-deadline
+
+default_kernel_params: 'init=/usr/lib/systemd/systemd cgroup_no_v1=all audit=0'
+extra_kernel_params: ''
+extra_kernel_pgp_keys: []
+
+python_3_version: 3.8.2
+node_version: 12.0.0
+ruby_version: 2.7.1
+perl_version: 5.30.2
+
+install_wine: false
+
+part_type: mbr

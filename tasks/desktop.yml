@@ -1,0 +1,41 @@
+---
+- name: Install dwm
+  aur: name=dwm-cdown-git skip_installed=yes
+  become: yes
+  become_user: makepkg
+
+- name: Install desktop utilities
+  pacman:
+    name:
+      #- dmenu
+      - rxvt-unicode
+      - physlock
+
+- name: Install optional desktop utilities
+  pacman:
+    name:
+      - libnotify
+      - dunst
+  when: not minimal
+
+- name: Install urxvt Perl extensions
+  pacman: name=urxvt-perls
+  when: not minimal
+
+- name: Set up terminal fonts
+  pacman:
+    name:
+      - terminus-font
+      - ttf-inconsolata
+
+- aur: name=ttf-symbola skip_installed=yes
+  become: yes
+  become_user: makepkg
+
+# https://bugs.archlinux.org/task/65969
+- aur: name=ttf-inconsolata-g skip_installed=yes
+  become: yes
+  become_user: makepkg
+
+- name: Install lockphyslock
+  copy: src=files/bin/lockphyslock dest=/usr/local/bin/lockphyslock mode=755

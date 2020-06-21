@@ -1,0 +1,31 @@
+---
+
+- name: Create local users
+  user: name={{ item }} shell=/bin/zsh
+  with_items: '{{ users }}'
+
+- name: Create adbusers group
+  group: name=adbusers state=present
+
+- name: Add local user to adbusers group
+  user: name={{ item }} groups=adbusers append=yes
+  with_items: '{{ users }}'
+
+- name: Create vboxusers group
+  group: name=vboxusers state=present
+
+- name: Add local user to vboxusers group
+  user: name={{ item }} groups=vboxusers append=yes
+  with_items: '{{ users }}'
+
+- name: Add local user to ssh group
+  user: name={{ item }} groups=ssh append=yes
+  with_items: '{{ users }}'
+
+- name: Set up SSH dir for {{ item }}
+  file: path=~{{ item }}/.ssh state=directory mode=0700 owner={{ item }} group={{ item }}
+  with_items: '{{ users }}'
+
+- name: Install SSH key for {{ item }}
+  copy: src=files/cdown_ssh_pubkey dest=~{{ item }}/.ssh/authorized_keys mode=600 owner={{ item }} group={{ item }}
+  with_items: '{{ users }}'

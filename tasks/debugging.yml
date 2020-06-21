@@ -1,0 +1,17 @@
+---
+- name: Install debugging tools
+  pacman:
+    name:
+      - htop
+      - strace
+      - time
+      - gdb
+      - perf
+
+- name: Install debugging tools (AUR)
+  aur: name={{ item }} skip_installed=yes skip_pgp_check=yes
+  with_items:
+    - python-bcc
+    - bcc-tools
+  become: yes
+  become_user: makepkg

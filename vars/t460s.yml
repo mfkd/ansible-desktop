@@ -1,0 +1,8 @@
+---
+model: T460s
+wifi: true
+laptop: true
+
+part_type: gpt
+
+key_user: lin

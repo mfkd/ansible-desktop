@@ -1,0 +1,2 @@
+---
+- copy: src=files/sysctl/generic.conf dest=/etc/sysctl.d/99-generic.conf

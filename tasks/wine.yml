@@ -1,0 +1,33 @@
+---
+- name: Fulfil lib32-libgl
+  pacman:
+    name:
+      - lib32-libglvnd  # wine has multiple fulfilments for lib32-libgl
+    extra_args: "--asdeps"
+
+- name: Install WINE
+  pacman:
+    name:
+      - wine
+      - wine-gecko
+      - wine-mono
+      # Audio
+      - lib32-alsa-plugins
+      - lib32-libpulse
+      - lib32-openal
+  when: install_wine|bool
+
+- name: Uninstall WINE
+  pacman:
+    state: absent
+    extra_args: "--recursive"
+    name:
+      - wine
+      - wine-gecko
+      - wine-mono
+      # Audio
+      - lib32-libglvnd  # wine has multiple fulfilments for lib32-libgl
+      - lib32-alsa-plugins
+      - lib32-libpulse
+      - lib32-openal
+  when: not install_wine

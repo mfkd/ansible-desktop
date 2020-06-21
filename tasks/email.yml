@@ -1,0 +1,7 @@
+---
+- name: Install tools for e-mail
+  pacman:
+    name:
+      - mutt
+      - w3m
+      - procmail

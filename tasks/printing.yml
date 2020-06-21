@@ -1,0 +1,6 @@
+---
+- name: Install CUPS and Ghostscript
+  pacman:
+    name:
+      - cups
+      - ghostscript
