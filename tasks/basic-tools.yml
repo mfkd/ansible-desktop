@@ -36,15 +36,6 @@
       - openssh
       - htop
       - mupdf
-      - btrfs-progs
-      - graphviz
-      - aspell
-      - aspell-en
-
-- name: Install dmenu-git (here to avoid conflict from revdeps)
-  aur: name=dmenu-git skip_installed=yes skip_pgp_check=yes
-  become: yes
-  become_user: makepkg
 
 - name: Install tools that don't require Ansible configuration (Chris specific)
   when: not minimal
@@ -52,75 +43,28 @@
     name:
       - lsof
       - reflector
-      - p7zip
       - maim
       - slop  # optdepends for `screenshot --select`
-      - openconnect
-      - msmtp
       - xclip
       - pass
-      - irssi
       # For duply
-      - python-boto
-      - parallel
-      - pdfpc
-      - enca
-      - android-tools
-      - android-udev
-      - hugin
-      - gimp
       - rustup
-      - imagemagick
-      - ghostscript # for imagemagick
       - mpv
-      - ncdu
-      - openbox  # presentations
-      - libreoffice-still
-      - mktorrent
-      - mpd
-      - mpc
-      - easytag
-      - udftools
       - pacman-contrib
-      - qemu
-      - exfat-utils
       - ctags
       - bind-tools
-      - python-virtualenvwrapper
       - powertop
-      - redshift
-      - asp
-      - colordiff
       - clipmenu
       - zsh-syntax-highlighting
-      - rtorrent
       - xdotool
-      - shellcheck
 
 - name: Install basic tools requiring aur (Chris specific)
   aur: name={{ item }} skip_installed=yes skip_pgp_check=yes
   when: not minimal
   with_items:
-    - cconv
-    - duply
-    - drive-bin
-    - pngquant
-    - sshrc
-    - xinput-toggle
     - nota
-    - mpdscribble
-    - mpdmenu
-    - btmenu
-    - geteltorito
     - google-chrome
-    - downgrade
-    - sxiv-cdown-git
-    - gimp-plugin-resynthesizer
-    - acestream-engine-stable
-    - spotify
-    - nocache
-    - whatmp3
-    - psi-notify
+    - xlogin-git
   become: yes
   become_user: makepkg
 
@@ -131,12 +75,3 @@
   when: laptop|bool
   become: yes
   become_user: makepkg
-
-- name: Install nsswitch.conf
-  copy: src=files/nsswitch.conf dest=/etc/nsswitch.conf
-
-- name: Install ImageMagick policy
-  copy: src=files/policy.xml dest=/etc/ImageMagick-7/policy.xml
-
-- name: Install vconsole config
-  copy: src=files/vconsole.conf dest=/etc/vconsole.conf
