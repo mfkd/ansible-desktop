@@ -30,7 +30,7 @@
 - name: Set up Xorg for Vostro 3700
   pacman:
     name:
-      - xf86-input-synaptics
+      - xf86-input-libinput
   when: model == "Vostro 3700"
 
 - name: Set up Xorg for T4xxs
@@ -47,14 +47,14 @@
 - name: Set up Xorg for ThinkPad
   pacman:
     name:
-      - xf86-input-synaptics
+      - xf86-input-libinput
   when: model in ["T460s", "T470s", "X1 Carbon"]
 
 - name: Set up Xorg for nouveau-using laptops
   pacman:
     name:
       - xf86-video-nouveau
-      - xf86-input-synaptics
+      - xf86-input-libinput
   when: model in ["XPS 8500"]
 
 - name: Remove intel video for those formerly using only integrated
