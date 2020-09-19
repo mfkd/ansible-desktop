@@ -19,6 +19,9 @@
 - name: Caps -> Ctrl in Xorg
   copy: src=files/xorg-no-caps dest=/etc/X11/xorg.conf.d/00-keyboard.conf mode=644
 
+- name: Libinput -> Libinut in Xorg
+  copy: src=files/libinput.conf dest=/etc/X11/xorg.conf.d/40-libinput.conf mode=644
+
 - name: Blacklist nouveau Xorg driver
   kernel_blacklist: name=nouveau state=present
   when: model in ["Vostro 3700"]
@@ -40,7 +43,7 @@
       - libva-intel-driver
   when: model in ["T460s", "T470s"]
 
-- name: Add UXA override 
+- name: Add UXA override
   copy: src=files/20-intel.conf dest=/etc/X11/xorg.conf.d/20-intel.conf mode=644
   when: model in ["T460s", "T470s"]
 
